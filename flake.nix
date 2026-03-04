@@ -38,5 +38,24 @@
       user = "eowusu";
       hostName = "homeserver";
     };
+
+    homeConfigurations."owusu.boateng" = inputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = import inputs.nixpkgs {
+        system = "aarch64-darwin";
+        config.allowUnfree = true;
+      };
+      extraSpecialArgs = {
+        inherit inputs self;
+        user = "owusu.boateng";
+        darwin = true;
+      };
+      modules = [
+        (import ./users/eowusu/home-manager.nix {
+          inherit inputs;
+          user = "owusu.boateng";
+          darwin = true;
+        })
+      ];
+    };
   };
 }
