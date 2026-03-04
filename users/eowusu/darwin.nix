@@ -44,12 +44,13 @@
     pkgs.lib.mkForce ''
       echo "setting up /Applications..." >&2
       rm -rf /Applications/Nix\ Apps
+      mkdir -p /Applications/Nix\ Apps
       find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
       while IFS= read -r src; do
         app_name=$(basename "$src")
         echo "copying $src" >&2
-        rm -rf "/Applications/$app_name"
-        ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/$app_name"
+        ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+        /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "/Applications/Nix Apps/$app_name" >/dev/null 2>&1 || true
       done
     '';
 
