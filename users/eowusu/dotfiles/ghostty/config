@@ -1,0 +1,21 @@
+theme = catppuccin-macchiato.conf
+#font-family = Osaka-Mono
+font-size = 14
+#font-thicken = true
+macos-titlebar-style = tabs
+
+clipboard-read = allow
+window-save-state = always
+
+# Font configuration
+font-family = ""
+font-family = "Source Code Pro"
+font-style = "Medium"
+font-style-italic = "Medium Italic"
+font-style-bold = "Bold"
+font-style-bold-italic = "Bold Italic"
+font-size = 14
+adjust-cell-width = -5%
+adjust-cell-height = 20%
+adjust-underline-position = 6
+adjust-underline-thickness = 40%

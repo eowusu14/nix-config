@@ -1,0 +1,106 @@
+# use volta for node instead of nvm. takes precedence over nvm
+export PATH="$HOME/.volta/bin:$PATH"
+
+# fix compdef errors
+autoload -Uz compinit
+compinit
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# source ~/github/experiments/ivanwang/dotfiles/scripts/chaws.shexport AWS_CONFIG_FILE=/Users/owusu.boateng/github/cloud/build_tools/aws_configs/cloud_config
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.1.3 # run chruby to see actual version
+
+
+# ~/.zshrc
+
+# Find and set branch name var if in git repository.
+function git_branch_name()
+{
+  branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
+  if [[ $branch == "" ]];
+  then
+    :
+  else
+    echo '- ('$branch')'
+  fi
+}
+
+# Enable substitution in the prompt.
+setopt prompt_subst
+
+# Config for prompt. PS1 synonym.
+prompt='%2/ $(git_branch_name) > '
+
+
+
+export PATH="/usr/local/opt/curl/bin:$PATH" #curl with --ssl support for rust installation
+export PATH="/usr/local/opt/curl/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# history setup
+HISTFILE=$HOME/.zhistory
+SAVEHIST=1000
+HISTSIZE=999
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_verify
+
+# completion using arrow keys (based on history)
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# ---- Eza (better ls) -----
+
+alias ls="eza --icons=always"
+
+# ---- Zoxide (better cd) ----
+eval "$(zoxide init zsh)"
+
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
+
+
+# kubectl aliases
+alias k='bin/kubectl'
+alias kctx-staging='kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-staging'
+alias kctx-prod='kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-production'
+alias kctx-preprod='kubectl config use-context arn:aws:eks:us-west-2:676657780981:cluster/primary-preprod'
+
+alias chaws='~/github/cloud/bin/kubectl env'
+alias kns='~/github/cloud/bin/kubectl ns'
+
+# git aliases
+alias unfuck='git reset HEAD~1 --soft'
+alias unstage='git reset HEAD --'
+alias uncommit='git reset HEAD~1 --soft'
+alias recommit='git commit --amend --no-edit'
+alias get='git pull origin'
+alias push='git push origin HEAD'
+alias commit='git commit -m'
+alias add='git add -p'
+alias log='git log --graph --all --pretty="format:%C(auto)%h %C(cyan)%ar %C(auto)%d %C(magenta)%an %C(auto)%s"'
+alias cd=z
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/owusu.boateng/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+# Go
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$HOME/.local/bin:$PATH"
+eval "$(direnv hook zsh)"
