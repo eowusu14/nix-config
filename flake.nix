@@ -1,5 +1,5 @@
 {
-  description = "Emmanuel's nix-darwin config";
+  description = "Emmanuel's multi-host Nix configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -14,105 +14,35 @@
     home-manager.url = "github:nix-community/home-manager";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew, home-manager, ... }:
+  outputs = inputs@{ self, ... }:
   let
-    configuration = { pkgs, config, ... }: {
-
-      nixpkgs.config.allowUnfree = true;
-
-      # List packages installed in system profile. To search by name, run:
-      # $ nix-env -qaP | grep wget
-      environment.systemPackages =
-        [ pkgs.tmux
-          pkgs.obsidian
-        ];
-
-      homebrew = {
-               enable = true;
-               brews = [
-                 "mas"
-               ];
-               casks = [
-                 "hammerspoon"
-                 "firefox"
-                 "iina"
-                 "the-unarchiver"
-               ];
-               masApps = {
-                 "Yoink" = 457622435;
-               };
-               onActivation.cleanup = "zap";
-      };
-
-      fonts.packages = [
-        pkgs.nerd-fonts."jetbrains-mono"
+    mkSystem = import ./lib/mksystem.nix { inherit inputs self; };
+  in {
+    darwinConfigurations.emmanuel = mkSystem {
+      kind = "darwin";
+      system = "aarch64-darwin";
+      modules = [
+        ./machines/darwin/emmanuel.nix
+        ./modules/darwin/common.nix
       ];
-
-      system.activationScripts.applications.text = let
-             env = pkgs.buildEnv {
-               name = "system-applications";
-               paths = config.environment.systemPackages;
-               pathsToLink = [ "/Applications" ];
-             };
-           in
-             pkgs.lib.mkForce ''
-               # Set up applications.
-               echo "setting up /Applications..." >&2
-               rm -rf /Applications/Nix\ Apps
-               find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-               while IFS= read -r src; do
-                 app_name=$(basename "$src")
-                 echo "copying $src" >&2
-                 rm -rf "/Applications/$app_name"
-                 ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/$app_name"
-               done
-             '';
-
-           system.defaults = {
-             dock.autohide  = true;
-             dock.largesize = 64;
-             dock.persistent-apps = [
-               "/Applications/Obsidian.app"
-               "/System/Applications/Calendar.app"
-             ];
-             finder.FXPreferredViewStyle = "clmv";
-             loginwindow.GuestEnabled  = false;
-             NSGlobalDomain.AppleICUForce24HourTime = true;
-             NSGlobalDomain.AppleInterfaceStyle = "Dark";
-             NSGlobalDomain.KeyRepeat = 2;
-           };
-
-        # Auto upgrade nix package.
-        # nix.package = pkgs.nix;
-
-
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
-
-      # Enable alternative shell support in nix-darwin.
-      # programs.fish.enable = true;
-      programs.zsh.enable = true;
-
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = self.rev or self.dirtyRev or null;
-
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 6;
-      system.primaryUser = "owusu.boateng";
-
-      # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
-
-      # allow to use nix-darwin with nix-determinate
-      nix.enable = false;
     };
-  in
-  {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#emmanuel # machine's hostname
-    darwinConfigurations."emmanuel" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+
+    nixosConfigurations.arch-linux = mkSystem {
+      kind = "nixos";
+      system = "x86_64-linux";
+      modules = [
+        ./machines/linux/arch-linux.nix
+        ./modules/linux/common.nix
+      ];
+    };
+
+    nixosConfigurations.ubuntu-server = mkSystem {
+      kind = "nixos";
+      system = "x86_64-linux";
+      modules = [
+        ./machines/linux/ubuntu-server.nix
+        ./modules/linux/common.nix
+      ];
     };
   };
 }
