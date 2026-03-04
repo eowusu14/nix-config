@@ -12,37 +12,31 @@
     homebrew-bundle = { url = "github:homebrew/homebrew-bundle"; flake = false; };
 
     home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs@{ self, ... }:
   let
     mkSystem = import ./lib/mksystem.nix { inherit inputs self; };
   in {
-    darwinConfigurations.emmanuel = mkSystem {
-      kind = "darwin";
+    darwinConfigurations.emmanuel = mkSystem "macbook" {
       system = "aarch64-darwin";
-      modules = [
-        ./machines/darwin/emmanuel.nix
-        ./modules/darwin/common.nix
-      ];
+      user = "owusu.boateng";
+      profile = "eowusu";
+      hostName = "emmanuel";
+      darwin = true;
     };
 
-    nixosConfigurations.arch-linux = mkSystem {
-      kind = "nixos";
+    nixosConfigurations.arch-linux = mkSystem "arch-x86_64" {
       system = "x86_64-linux";
-      modules = [
-        ./machines/linux/arch-linux.nix
-        ./modules/linux/common.nix
-      ];
+      user = "eowusu";
+      hostName = "arch-linux";
     };
 
-    nixosConfigurations.ubuntu-server = mkSystem {
-      kind = "nixos";
+    nixosConfigurations.homeserver = mkSystem "homeserver-x86_64" {
       system = "x86_64-linux";
-      modules = [
-        ./machines/linux/ubuntu-server.nix
-        ./modules/linux/common.nix
-      ];
+      user = "eowusu";
+      hostName = "homeserver";
     };
   };
 }

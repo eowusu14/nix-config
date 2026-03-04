@@ -1,6 +1,11 @@
 { self, pkgs, config, ... }:
 {
-  nixpkgs.config.allowUnfree = true;
+  users.users."owusu.boateng" = {
+    home = "/Users/owusu.boateng";
+    shell = pkgs.zsh;
+  };
+
+  system.primaryUser = "owusu.boateng";
 
   environment.systemPackages = [
     pkgs.tmux

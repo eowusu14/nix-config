@@ -1,6 +1,5 @@
 { ... }:
 {
-  networking.hostName = "arch-linux";
   system.stateVersion = "24.11";
 
   boot.loader.grub.enable = true;

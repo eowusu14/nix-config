@@ -1,14 +1,38 @@
 { inputs, self }:
-{ kind, system, modules }:
-if kind == "darwin" then
-  inputs.nix-darwin.lib.darwinSystem {
-    inherit system modules;
-    specialArgs = { inherit inputs self; };
-  }
-else if kind == "nixos" then
-  inputs.nixpkgs.lib.nixosSystem {
-    inherit system modules;
-    specialArgs = { inherit inputs self; };
-  }
-else
-  throw "Unsupported system kind: ${kind}"
+
+name:
+{
+  system,
+  user,
+  profile ? user,
+  hostName ? name,
+  darwin ? false
+}:
+
+let
+  machineConfig = ../machines/${name}.nix;
+  userOSConfig = ../users/${profile}/${if darwin then "darwin" else "nixos"}.nix;
+
+  systemFunc = if darwin then inputs.nix-darwin.lib.darwinSystem else inputs.nixpkgs.lib.nixosSystem;
+in
+systemFunc {
+  inherit system;
+
+  specialArgs = { inherit inputs self; };
+
+  modules = [
+    { nixpkgs.config.allowUnfree = true; }
+    machineConfig
+    userOSConfig
+    { networking.hostName = hostName; }
+    {
+      config._module.args = {
+        currentSystem = system;
+        currentSystemName = name;
+        currentSystemUser = user;
+        currentHostName = hostName;
+        inherit inputs self;
+      };
+    }
+  ];
+}
