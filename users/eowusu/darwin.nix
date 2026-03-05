@@ -13,6 +13,8 @@
     pkgs.gh
     pkgs.ripgrep
     pkgs.tree
+    pkgs.aerospace
+    pkgs.ghostty
     # pkgs.tmux
     # pkgs.obsidian
     #
@@ -41,10 +43,10 @@
       "brave-browser"
       "codex"
       "discord"
-      "docker"
+      "docker-desktop"
       "firefox"
       "free-download-manager"
-      "ghostty"
+      # "ghostty"
       "hiddenbar"
       "iina"
       "iterm2"
