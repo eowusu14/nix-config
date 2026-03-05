@@ -174,9 +174,9 @@
       setw -g allow-set-title off
       setw -g automatic-rename-format "#{window_name}"
       # Re-apply on creation so restored/new windows don't drift.
-      set-hook -g after-new-window "setw -t #{session_name}:#{window_index} automatic-rename off; setw -t #{session_name}:#{window_index} allow-rename off; rename-window -t #{session_name}:#{window_index} zsh"
+      set-hook -g after-new-window "set-window-option automatic-rename off; set-window-option allow-rename off; rename-window zsh"
       # Prefer friendly name for first window in new sessions.
-      set-hook -g after-new-session "rename-window -t #{session_name}:1 zsh"
+      set-hook -g after-new-session "rename-window zsh"
       # Don't let tmux overwrite the terminal/tab title.
       set -g set-titles off
       setw -g pane-base-index 1
