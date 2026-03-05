@@ -1,17 +1,22 @@
-{ self, pkgs, config, ... }:
+{ self, pkgs, config, user, ... }:
 {
-  users.users."owusu.boateng" = {
-    home = "/Users/owusu.boateng";
+  users.users.${user} = {
+    home = "/Users/${user}";
     shell = pkgs.zsh;
   };
 
-  system.primaryUser = "owusu.boateng";
+  system.primaryUser = user;
 
   environment.systemPackages = [
     pkgs.nix
     pkgs.nodejs
+    pkgs.gh
+    pkgs.ripgrep
+    pkgs.tree
     # pkgs.tmux
     # pkgs.obsidian
+    #
+    pkgs.gopls
   ];
 
   homebrew = {

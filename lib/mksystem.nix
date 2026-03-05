@@ -20,7 +20,7 @@ in
 systemFunc {
   inherit system;
 
-  specialArgs = { inherit inputs self; };
+  specialArgs = { inherit inputs self user hostName; };
 
   modules = [
     { nixpkgs.config.allowUnfree = true; }

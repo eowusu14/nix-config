@@ -18,12 +18,16 @@
   outputs = inputs@{ self, nixpkgs, home-manager, ... }:
   let
     mkSystem = import ./lib/mksystem.nix { inherit inputs self; };
+    # Centralized user/hostName
+    darwinUser = "owusu.boateng";
+    darwinProfile = "eowusu";
+    darwinHost = "emmanuel";
   in {
-    darwinConfigurations.emmanuel = mkSystem "macbook" {
+    darwinConfigurations.${darwinHost} = mkSystem "macbook" {
       system = "aarch64-darwin";
-      user = "owusu.boateng";
-      profile = "eowusu";
-      hostName = "emmanuel";
+      user = darwinUser;
+      profile = darwinProfile;
+      hostName = darwinHost;
       darwin = true;
     };
 
@@ -39,20 +43,20 @@
       hostName = "homeserver";
     };
 
-    homeConfigurations."owusu.boateng" = inputs.home-manager.lib.homeManagerConfiguration {
+    homeConfigurations.${darwinUser} = inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = import inputs.nixpkgs {
         system = "aarch64-darwin";
         config.allowUnfree = true;
       };
       extraSpecialArgs = {
         inherit inputs self;
-        user = "owusu.boateng";
+        user = darwinUser;
         darwin = true;
       };
       modules = [
         (import ./users/eowusu/home-manager.nix {
           inherit inputs;
-          user = "owusu.boateng";
+          user = darwinUser;
           darwin = true;
         })
       ];
