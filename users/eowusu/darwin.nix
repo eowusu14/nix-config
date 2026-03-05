@@ -8,29 +8,82 @@
   system.primaryUser = "owusu.boateng";
 
   environment.systemPackages = [
-    pkgs.tmux
-    pkgs.obsidian
+    pkgs.nix
+    pkgs.nodejs
+    # pkgs.tmux
+    # pkgs.obsidian
   ];
 
   homebrew = {
     enable = true;
+    onActivation = {
+       cleanup = "zap";
+       # Update brew packages on rebuild
+       autoUpdate = true;
+       upgrade = true;
+     };
+     global.autoUpdate = true;
+
     brews = [
       "mas"
+      "neovim"
+      "tailscale"
+
     ];
     casks = [
-      "hammerspoon"
+      "alt-tab"
+      "aws-vpn-client"
+      "brave-browser"
+      "codex"
+      "discord"
+      "docker"
       "firefox"
+      "free-download-manager"
+      "ghostty"
+      "hiddenbar"
       "iina"
+      "iterm2"
+      "obsidian"
+      "okta-verify"
+      "pgadmin4"
+      "postman"
+      "rectangle"
+      "syncthing-app"
+      "tailscale-app"
+      "visual-studio-code"
+      "zed"
+      #"neovim"
+      "google-chrome"
+      "raycast"
+      "spotify"
+      "slack"
+      "tailscale-app"
+      "telegram"
       "the-unarchiver"
+      "tor-browser"
+      "vlc"
+      "zoom"
+
     ];
     masApps = {
-      "Yoink" = 457622435;
+      "Amphetamine" = 937984704;
+      "Telegram" = 747648890;
+      "Infuse" = 1136220934;
+      "Whatsapp" = 310633997;
+      "Keepsmile" = 1543351744;
+      "Capcut" = 1500855883;
     };
-    onActivation.cleanup = "zap";
   };
 
   fonts.packages = [
+    pkgs.ia-writer-mono
+    pkgs.ibm-plex
+    pkgs.jetbrains-mono
     pkgs.nerd-fonts."jetbrains-mono"
+    pkgs.nerd-fonts."meslo-lg"
+    pkgs.nerd-fonts.fira-code
+    pkgs.nerd-fonts.fira-mono
+    pkgs.nerd-fonts.hack
   ];
 
   system.activationScripts.applications.text =
@@ -54,12 +107,18 @@
       done
     '';
 
+  # macOS Configuration
   system.defaults = {
     dock.autohide = true;
     dock.largesize = 64;
     dock.persistent-apps = [
+      "/System/Applications/Launchpad.app"
+      "/Applications/Google Chrome.app"
       "/Applications/Obsidian.app"
-      "/System/Applications/Calendar.app"
+      "/Applications/Slack.app"
+      "/Applications/Visual Studio Code.app"
+      "/Applications/Ghostty.app"
+      "/Applications/Zed.app"
     ];
     finder.FXPreferredViewStyle = "clmv";
     loginwindow.GuestEnabled = false;
