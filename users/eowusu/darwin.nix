@@ -34,6 +34,11 @@
       "mas"
       "neovim"
       "tailscale"
+      "qemu"
+      "python3"
+      "uv"
+      "samba"
+      "go"
 
     ];
     casks = [
@@ -77,13 +82,13 @@
       "Infuse" = 1136220934;
       "Whatsapp" = 310633997;
       "Capcut" = 1500855883;
+      "Xcode" = 497799835;
     };
   };
 
   fonts.packages = [
     pkgs.ia-writer-mono
     pkgs.ibm-plex
-    pkgs.jetbrains-mono
     pkgs.nerd-fonts."jetbrains-mono"
     pkgs.nerd-fonts."meslo-lg"
     pkgs.nerd-fonts.fira-code
