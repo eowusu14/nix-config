@@ -77,7 +77,7 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
-    tmux.enableShellIntegration = true;
+    tmux.enableShellIntegration = false;
   };
 
   programs.zoxide = {
@@ -167,12 +167,30 @@
       unbind r
       bind r source-file ~/.config/tmux/tmux.conf
       set -g default-shell /bin/zsh
+      set -g default-command "exec /bin/zsh -l"
+      # Keep manually renamed windows stable.
+      setw -g automatic-rename off
+      setw -g allow-rename off
+      setw -g allow-set-title off
+      setw -g automatic-rename-format "#{window_name}"
+      # Re-apply on creation so restored/new windows don't drift.
+      set-hook -g after-new-window "setw -t #{session_name}:#{window_index} automatic-rename off; setw -t #{session_name}:#{window_index} allow-rename off; rename-window -t #{session_name}:#{window_index} zsh"
+      # Prefer friendly name for first window in new sessions.
+      set-hook -g after-new-session "rename-window -t #{session_name}:1 zsh"
+      # Don't let tmux overwrite the terminal/tab title.
+      set -g set-titles off
       setw -g pane-base-index 1
       bind-key h select-pane -L
       bind-key j select-pane -D
       bind-key k select-pane -U
       bind-key l select-pane -R
       set-option -g status-position top
+      set -g status-right "%H:%M %d-%b-%y"
+      # Catppuccin defaults to #T (pane title), which is host name on this setup.
+      set -g @catppuccin_window_text " #W"
+      set -g @catppuccin_window_current_text " #W"
+      set -g window-status-format "#[fg=#11111b,bg=#{@thm_overlay_2}] #I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #W "
+      set -g window-status-current-format "#[fg=#11111b,bg=#{@thm_mauve}] #I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W "
 
       set -g @continuum-save-interval '5'
       set -g @continuum-boot 'on'
@@ -190,6 +208,12 @@
   };
 
   home.file = {
+    ".tmux.conf" = {
+      text = ''
+        source-file ~/.config/tmux/tmux.conf
+      '';
+      force = true;
+    };
     ".p10k.zsh" = {
       source = ./dotfiles/.p10k.zsh;
       force = true;
