@@ -10,31 +10,31 @@
   programs.git = {
     enable = true;
     settings = {
-          user = {
-            email = "owusuboateng149@gmail.com";
-            name = "eowusu14";
-          };
-          init = {
-            defaultBranch = "main";
-          };
-          merge = {
-            conflictStyle = "diff3";
-            tool = "meld";
-          };
-          pull = {
-            rebase = true;
-          };
-        };
-    aliases = {
-      undo = "reset HEAD~1 --soft";
-      unstage = "reset HEAD --";
-      uncommit = "reset HEAD~1 --soft";
-      recommit = "commit --amend --no-edit";
-      get = "pull origin";
-      push = "push origin HEAD";
-      commit = "commit -m";
-      add = "add -p";
-      log = "log --graph --all --pretty=format:%C(auto)%h %C(cyan)%ar %C(auto)%d %C(magenta)%an %C(auto)%s";
+      user = {
+        email = "owusuboateng149@gmail.com";
+        name = "eowusu14";
+      };
+      init = {
+        defaultBranch = "main";
+      };
+      merge = {
+        conflictStyle = "diff3";
+        tool = "meld";
+      };
+      pull = {
+        rebase = true;
+      };
+      alias = {
+        undo = "reset HEAD~1 --soft";
+        unstage = "reset HEAD --";
+        uncommit = "reset HEAD~1 --soft";
+        recommit = "commit --amend --no-edit";
+        get = "pull origin";
+        push = "push origin HEAD";
+        commit = "commit -m";
+        add = "add -p";
+        log = "log --graph --all --pretty=format:%C(auto)%h %C(cyan)%ar %C(auto)%d %C(magenta)%an %C(auto)%s";
+      };
     };
   };
 
@@ -106,7 +106,7 @@
       cd = "z";
     };
 
-    initExtra = ''
+    initContent = ''
       export PATH="$HOME/.volta/bin:$PATH"
       export PATH="/usr/local/opt/curl/bin:$PATH"
       export LDFLAGS="-L/usr/local/opt/openssl/lib"
