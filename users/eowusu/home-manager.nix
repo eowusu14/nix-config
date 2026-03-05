@@ -6,6 +6,7 @@
   home.stateVersion = "24.11";
 
   programs.home-manager.enable = true;
+  home.packages = [ pkgs.zsh-powerlevel10k ];
 
   programs.git = {
     enable = true;
@@ -123,8 +124,9 @@
       source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
       source /opt/homebrew/opt/chruby/share/chruby/auto.sh
       chruby ruby-3.1.3
-      source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
       ''}
+
+      source "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme"
 
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
