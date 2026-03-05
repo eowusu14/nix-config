@@ -14,7 +14,6 @@
     pkgs.ripgrep
     pkgs.tree
     pkgs.aerospace
-    pkgs.ghostty
     # pkgs.tmux
     # pkgs.obsidian
     #
@@ -46,7 +45,7 @@
       "docker-desktop"
       "firefox"
       "free-download-manager"
-      # "ghostty"
+      "ghostty"
       "hiddenbar"
       "iina"
       "iterm2"
@@ -77,7 +76,6 @@
       "Telegram" = 747648890;
       "Infuse" = 1136220934;
       "Whatsapp" = 310633997;
-      "Keepsmile" = 1543351744;
       "Capcut" = 1500855883;
     };
   };
