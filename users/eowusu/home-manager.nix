@@ -6,7 +6,11 @@
   home.stateVersion = "24.11";
 
   programs.home-manager.enable = true;
-  home.packages = [ pkgs.zsh-powerlevel10k ];
+  home.packages = [
+    pkgs.zsh-powerlevel10k
+    pkgs.chruby
+    pkgs.uv
+  ];
 
   programs.git = {
     enable = true;
@@ -121,9 +125,15 @@
       fi
 
       ${lib.optionalString darwin ''
-      source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-      source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-      chruby ruby-3.1.3
+      if [[ -r "${pkgs.chruby}/share/chruby/chruby.sh" ]]; then
+        source "${pkgs.chruby}/share/chruby/chruby.sh"
+      fi
+      if [[ -r "${pkgs.chruby}/share/chruby/auto.sh" ]]; then
+        source "${pkgs.chruby}/share/chruby/auto.sh"
+      fi
+      if command -v chruby >/dev/null 2>&1; then
+        chruby ruby-3.1.3 || true
+      fi
       ''}
 
       source "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme"
@@ -133,8 +143,12 @@
       bindkey '^[[A' history-search-backward
       bindkey '^[[B' history-search-forward
 
-      eval "$(uv generate-shell-completion zsh)"
-      eval "$(uvx --generate-shell-completion zsh)"
+      if command -v uv >/dev/null 2>&1; then
+        eval "$(uv generate-shell-completion zsh)"
+      fi
+      if command -v uvx >/dev/null 2>&1; then
+        eval "$(uvx --generate-shell-completion zsh)"
+      fi
 
       # rancher desktop path
       export PATH="$HOME/.rd/bin:$PATH"
