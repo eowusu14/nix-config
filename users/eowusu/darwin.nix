@@ -14,9 +14,6 @@
     pkgs.ripgrep
     pkgs.tree
     pkgs.aerospace
-    # pkgs.tmux
-    # pkgs.obsidian
-    #
     pkgs.gopls
   ];
 
@@ -82,7 +79,7 @@
       "Infuse" = 1136220934;
       "Whatsapp" = 310633997;
       "Capcut" = 1500855883;
-      "Xcode" = 497799835;
+      # "Xcode" = 497799835;
     };
   };
 
