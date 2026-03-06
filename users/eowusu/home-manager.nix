@@ -1,9 +1,5 @@
 { user, darwin ? false, ... }:
 { lib, pkgs, ... }:
-let
-  myDotfiles = ./dotfiles;
-  myTmuxConfig = builtins.readFile (myDotfiles + "/.tmux.conf");
-in
 {
   home.username = user;
   home.homeDirectory = if darwin then "/Users/${user}" else "/home/${user}";
@@ -137,178 +133,119 @@ in
     '';
   };
 
+  programs.tmux = {
+      enable = true;
+      keyMode = "vi";
+      clock24 = true;
+      historyLimit = 9999999;
+      mouse = true;
+      baseIndex = 1;
+      escapeTime = 0;
+      plugins = with pkgs.tmuxPlugins; [
+        catppuccin
+        gruvbox
+        resurrect
+        continuum
+        vim-tmux-navigator
+        sensible
+      ];
+      extraConfig = ''
+        # reload config file
+        bind r source-file ~/.config/tmux/tmux.conf \; display-message "~/.config/tmux/tmux.conf reloaded."
 
-  # programs.tmux = {
-  #   enable = true;
-  #   mouse = true;
-  #   historyLimit = 9999999;
-  #   terminal = "tmux-256color";
-  #   keyMode = "vi";
-  #   baseIndex = 1;
-  #   escapeTime = 0;
-  #   plugins = with pkgs.tmuxPlugins; [
-  #     catppuccin
-  #     resurrect
-  #     continuum
-  #     sensible
-  #     vim-tmux-navigator
-  #   ];
-  #   extraConfig =
-  #   ''
-  #     unbind r
-  #     bind r source-file ~/.config/tmux/tmux.conf
-  #     set -g default-shell /bin/zsh
-  #     set -g default-command "exec /bin/zsh -l"
-  #     # Keep manually renamed windows stable.
-  #     setw -g automatic-rename off
-  #     setw -g allow-rename off
-  #     setw -g allow-set-title off
-  #     setw -g automatic-rename-format "#{window_name}"
-  #     # Re-apply on creation so restored/new windows don't drift.
-  #     set-hook -g after-new-window "set-window-option automatic-rename off; set-window-option allow-rename off; rename-window zsh"
-  #     # Prefer friendly name for first window in new sessions.
-  #     set-hook -g after-new-session "rename-window zsh"
-  #     # Don't let tmux overwrite the terminal/tab title.
-  #     set -g set-titles off
-  #     setw -g pane-base-index 1
-  #     bind-key h select-pane -L
-  #     bind-key j select-pane -D
-  #     bind-key k select-pane -U
-  #     bind-key l select-pane -R
-  #     set-option -g status-position top
-  #     set -g status-right "%H:%M %d-%b-%y"
-  #     # Catppuccin defaults to #T (pane title), which is host name on this setup.
-  #     set -g @catppuccin_window_text " #W"
-  #     set -g @catppuccin_window_current_text " #W"
-  #     set -g window-status-format "#[fg=#11111b,bg=#{@thm_overlay_2}] #I #[fg=#cdd6f4,bg=#{@thm_surface_0}] #W "
-  #     set -g window-status-current-format "#[fg=#11111b,bg=#{@thm_mauve}] #I #[fg=#cdd6f4,bg=#{@thm_surface_1}] #W "
+        set -g default-terminal "tmux-256color"
+        set -g default-shell /bin/zsh
 
-  #     set -g @continuum-save-interval '5'
-  #     set -g @continuum-boot 'on'
-  #     set -g @continuum-restore 'on'
-  #     set -g @resurrect-capture-pane-contents 'on'
-  #   ''
-  #   ;
+        #start panes at 1
+        set -g pane-base-index 1
 
-  # };
+        # remap prefix from 'C-b' to 'C-a'
+        unbind C-b
+        set-option -g prefix C-a
+        bind-key C-a send-prefix
 
-  # programs.tmux = {
-  #     enable = true;
-  #     keyMode = "vi";
-  #     clock24 = true;
-  #     historyLimit = 9999999;
-  #     mouse = true;
-  #     baseIndex = 1;
-  #     escapeTime = 0;
-  #     plugins = with pkgs.tmuxPlugins; [
-  #       catppuccin
-  #       gruvbox
-  #       resurrect
-  #       continuum
-  #       vim-tmux-navigator
-  #       sensible
-  #     ];
-  #     extraConfig = ''
-  #       # reload config file
-  #       bind r source-file ~/.config/tmux/tmux.conf \; display-message "~/.config/tmux/tmux.conf reloaded."
+        # split panes using | and -
+        bind | split-window -h
+        bind - split-window -v
+        unbind '"'
+        unbind %
 
-  #       set -g default-terminal "tmux-256color"
-  #       set -g default-shell /bin/zsh
+        # switch panes using Ctrl+Shift+arrow without prefix
+        bind -n C-S-Left select-pane -L
+        bind -n C-S-Right select-pane -R
+        bind -n C-S-Up select-pane -U
+        bind -n C-S-Down select-pane -D
 
-  #       #start panes at 1
-  #       set -g pane-base-index 1
+        # switch panes vim-like
+        bind-key h select-pane -L
+        bind-key j select-pane -D
+        bind-key k select-pane -U
+        bind-key l select-pane -R
 
-  #       # remap prefix from 'C-b' to 'C-a'
-  #       unbind C-b
-  #       set-option -g prefix C-a
-  #       bind-key C-a send-prefix
+        # switch windows using Shift-arrow without prefix
+        bind -n S-Left previous-window
+        bind -n S-Right next-window
 
-  #       # split panes using | and -
-  #       bind | split-window -h
-  #       bind - split-window -v
-  #       unbind '"'
-  #       unbind %
+        # don't rename windows automatically
+        set-option -g allow-rename off
 
-  #       # switch panes using Ctrl+Shift+arrow without prefix
-  #       bind -n C-S-Left select-pane -L
-  #       bind -n C-S-Right select-pane -R
-  #       bind -n C-S-Up select-pane -U
-  #       bind -n C-S-Down select-pane -D
+        # rename window to reflect current program
+        setw -g automatic-rename on
 
-  #       # switch panes vim-like
-  #       bind-key h select-pane -L
-  #       bind-key j select-pane -D
-  #       bind-key k select-pane -U
-  #       bind-key l select-pane -R
+        # renumber windows when a window is closed
+        set -g renumber-windows on
 
-  #       # switch windows using Shift-arrow without prefix
-  #       bind -n S-Left previous-window
-  #       bind -n S-Right next-window
+        # don't do anything when a 'bell' rings
+        set -g visual-activity off
+        set -g visual-bell off
+        set -g visual-silence off
+        setw -g monitor-activity off
+        set -g bell-action none
 
-  #       # don't rename windows automatically
-  #       set-option -g allow-rename off
+        # clock mode
+        setw -g clock-mode-colour yellow
 
-  #       # rename window to reflect current program
-  #       setw -g automatic-rename on
+        # copy mode
+        setw -g mode-style 'fg=black bg=yellow bold'
 
-  #       # renumber windows when a window is closed
-  #       set -g renumber-windows on
+        # panes
+        set -g pane-border-style 'fg=yellow'
+        set -g pane-active-border-style 'fg=green'
 
-  #       # don't do anything when a 'bell' rings
-  #       set -g visual-activity off
-  #       set -g visual-bell off
-  #       set -g visual-silence off
-  #       setw -g monitor-activity off
-  #       set -g bell-action none
+        # statusbar
+        set -g status-position top
+        set -g status-justify left
+        set -g status-style 'fg=green'
+        set -g status-left ""
+        set -g status-left-length 10
+        set -g status-right '#[fg=green,bg=default,bright]#(tmux-mem-cpu-load) #[fg=red,dim,bg=default]#(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") #[fg=white,bg=default]%a%l:%M:%S %p#[default] #[fg=blue]%Y-%m-%d'
 
-  #       # clock mode
-  #       setw -g clock-mode-colour yellow
+        setw -g window-status-current-style 'fg=black bg=green'
+        setw -g window-status-current-format ' #I #W #F '
+        setw -g window-status-style 'fg=green bg=black'
+        setw -g window-status-format ' #I #[fg=white]#W #[fg=yellow]#F '
+        setw -g window-status-bell-style 'fg=black bg=yellow bold'
 
-  #       # copy mode
-  #       setw -g mode-style 'fg=black bg=yellow bold'
+        # auto save and restore sessions with tmux-continuum/resurrect
+        set -g @continuum-save-interval '5'
+        set -g @continuum-boot 'on'
 
-  #       # panes
-  #       set -g pane-border-style 'fg=yellow'
-  #       set -g pane-active-border-style 'fg=green'
+        # resurrect automatically
+        set -g @continuum-restore 'on'
+        set -g @resurrect-capture-pane-contents 'on'
 
-  #       # statusbar
-  #       set -g status-position top
-  #       set -g status-justify left
-  #       set -g status-style 'fg=green'
-  #       set -g status-left ""
-  #       set -g status-left-length 10
-  #       set -g status-right '#[fg=green,bg=default,bright]#(tmux-mem-cpu-load) #[fg=red,dim,bg=default]#(uptime | cut -f 4-5 -d " " | cut -f 1 -d ",") #[fg=white,bg=default]%a%l:%M:%S %p#[default] #[fg=blue]%Y-%m-%d'
+        # messages
+        set -g message-style 'fg=black bg=yellow bold'
 
-  #       setw -g window-status-current-style 'fg=black bg=green'
-  #       setw -g window-status-current-format ' #I #W #F '
-  #       setw -g window-status-style 'fg=green bg=black'
-  #       setw -g window-status-format ' #I #[fg=white]#W #[fg=yellow]#F '
-  #       setw -g window-status-bell-style 'fg=black bg=yellow bold'
+        # start new session
+        new-session -s main
 
-  #       # auto save and restore sessions with tmux-continuum/resurrect
-  #       set -g @continuum-save-interval '5'
-  #       set -g @continuum-boot 'on'
-
-  #       # resurrect automatically
-  #       set -g @continuum-restore 'on'
-  #       set -g @resurrect-capture-pane-contents 'on'
-
-  #       # messages
-  #       set -g message-style 'fg=black bg=yellow bold'
-
-  #       # start new session
-  #       new-session -s main
-
-  #       # init tmux plugin manager (keep this at the bottom of config)
-  #       run '~/.tmux/plugins/tpm/tpm'
-  #     '';
-  #   };
+        # init tmux plugin manager (keep this at the bottom of config)
+        run '~/.tmux/plugins/tpm/tpm'
+      '';
+    };
 
   home.file = {
-    ".tmux.conf" = {
-      source = ./dotfiles/.tmux.conf;
-      force = true;
-      };
     #zsh theme
     ".p10k.zsh" = {
       # text = builtins.readFile ./dotfiles/.p10k.zsh;
