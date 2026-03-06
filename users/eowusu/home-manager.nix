@@ -1,5 +1,9 @@
 { user, darwin ? false, ... }:
 { lib, pkgs, ... }:
+let
+  myDotfiles = ./dotfiles;
+  myTmuxConfig = builtins.readFile (myDotfiles + "/.tmux.conf");
+in
 {
   home.username = user;
   home.homeDirectory = if darwin then "/Users/${user}" else "/home/${user}";
@@ -111,13 +115,14 @@
 
     shellAliases = {
       ls = "eza --icons=always";
+      cd = "z";
+
       k = "bin/kubectl";
       "kctx-staging" = "kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-staging";
       "kctx-prod" = "kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-production";
       "kctx-preprod" = "kubectl config use-context arn:aws:eks:us-west-2:676657780981:cluster/primary-preprod";
       chaws = "~/github/cloud/bin/kubectl env";
       kns = "~/github/cloud/bin/kubectl ns";
-      cd = "z";
     };
 
     initExtra = ''
@@ -176,9 +181,7 @@
       export PATH="$HOME/.rd/bin:$PATH"
     '';
   };
-    */
 
-  /*
   programs.tmux = {
     enable = true;
     mouse = true;
@@ -187,7 +190,9 @@
     keyMode = "vi";
     baseIndex = 1;
     escapeTime = 0;
-    extraConfig = ''
+    extraConfig = myTmuxConfig;
+    /*
+    ''
       unbind r
       bind r source-file ~/.config/tmux/tmux.conf
       set -g default-shell /bin/zsh
@@ -221,6 +226,7 @@
       set -g @continuum-restore 'on'
       set -g @resurrect-capture-pane-contents 'on'
     '';
+    */
 
     plugins = with pkgs.tmuxPlugins; [
       catppuccin
@@ -229,9 +235,9 @@
       sensible
       vim-tmux-navigator
     ];
-  */
   };
 
+  /*
   programs.tmux = {
       enable = true;
       keyMode = "vi";
@@ -343,6 +349,7 @@
         run '~/.tmux/plugins/tpm/tpm'
       '';
     };
+    */
 
   home.file = {
     /*
