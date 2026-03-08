@@ -248,7 +248,6 @@
   home.file = {
     #zsh theme
     ".p10k.zsh" = {
-      # text = builtins.readFile ./dotfiles/.p10k.zsh;
       source = ./dotfiles/.p10k.zsh;
       force = true;
     };
