@@ -8,6 +8,7 @@
   system.primaryUser = user;
 
   environment.systemPackages = [
+    pkgs.discord
     pkgs.nix
     pkgs.nodejs
     pkgs.gh
@@ -15,6 +16,7 @@
     pkgs.tree
     pkgs.aerospace
     pkgs.gopls
+     pkgs.qemu
   ];
 
   homebrew = {
@@ -31,7 +33,7 @@
       "mas"
       "neovim"
       "tailscale"
-      "qemu"
+      # "qemu"
       "python3"
       "uv"
       "samba"
@@ -43,7 +45,7 @@
       "aws-vpn-client"
       "brave-browser"
       "codex"
-      "discord"
+      # "discord"
       "docker-desktop"
       "firefox"
       "free-download-manager"
