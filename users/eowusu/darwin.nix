@@ -8,7 +8,9 @@
   system.primaryUser = user;
 
   environment.systemPackages = [
+    pkgs.alt-tab-macos
     pkgs.discord
+    pkgs.hidden-bar
     pkgs.nix
     pkgs.nodejs
     pkgs.gh
@@ -30,6 +32,7 @@
      global.autoUpdate = true;
 
     brews = [
+      "k9s"
       "mas"
       "neovim"
       "tailscale"
@@ -41,7 +44,7 @@
 
     ];
     casks = [
-      "alt-tab"
+      # "alt-tab"
       "aws-vpn-client"
       "brave-browser"
       "codex"
@@ -50,7 +53,7 @@
       "firefox"
       "free-download-manager"
       "ghostty"
-      "hiddenbar"
+      # "hiddenbar"
       "iina"
       "iterm2"
       "obsidian"
