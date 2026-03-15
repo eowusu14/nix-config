@@ -32,6 +32,7 @@
      global.autoUpdate = true;
 
     brews = [
+      "iina"
       "k9s"
       "mas"
       "neovim"
