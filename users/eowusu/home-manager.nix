@@ -1,5 +1,5 @@
 { user, darwin ? false, ... }:
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   home.username = user;
   home.homeDirectory = if darwin then "/Users/${user}" else "/home/${user}";
@@ -92,46 +92,6 @@
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
-  };
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    history = {
-      path = if darwin then "/Users/${user}/.zhistory" else "/home/${user}/.zhistory";
-      save = 1000;
-      size = 999;
-      share = true;
-      expireDuplicatesFirst = true;
-      ignoreDups = true;
-    };
-
-    shellAliases = {
-      ls = "eza --icons=always";
-      cd = "z";
-
-      k = "bin/kubectl";
-      "kctx-staging" = "kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-staging";
-      "kctx-prod" = "kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-production";
-      "kctx-preprod" = "kubectl config use-context arn:aws:eks:us-west-2:676657780981:cluster/primary-preprod";
-      chaws = "~/github/cloud/bin/kubectl env";
-      kns = "~/github/cloud/bin/kubectl ns";
-    };
-
-    initContent = ''
-      # zsh theme
-      source "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme"
-      source ~/.p10k.zsh
-      source /Users/owusu.boateng/.config/zipline/env
-
-      # history behavior
-      setopt hist_verify
-      bindkey '^[[A' history-search-backward
-      bindkey '^[[B' history-search-forward
-    '';
   };
 
   programs.tmux = {
@@ -247,6 +207,11 @@
     };
 
   home.file = {
+    ".zshrc" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/users/eowusu/dotfiles/.zshrc";
+      force = true;
+    };
+
     #zsh theme
     ".p10k.zsh" = {
       source = ./dotfiles/.p10k.zsh;
