@@ -10,6 +10,8 @@
   environment.systemPackages = [
     pkgs.alt-tab-macos
     pkgs.discord
+    # pkgs.docker
+    pkgs.docker-client
     pkgs.hidden-bar
     pkgs.nix
     pkgs.nodejs
@@ -32,6 +34,7 @@
      global.autoUpdate = true;
 
     brews = [
+      "docker"
       "iina"
       "k9s"
       "mas"
@@ -55,7 +58,7 @@
       "free-download-manager"
       "ghostty"
       # "hiddenbar"
-      "iina"
+      # "iina"
       "iterm2"
       "obsidian"
       "okta-verify"
