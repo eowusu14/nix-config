@@ -11,7 +11,7 @@
     pkgs.alt-tab-macos
     pkgs.discord
     # pkgs.docker
-    pkgs.docker-client
+    # pkgs.docker-client
     pkgs.hidden-bar
     pkgs.nix
     pkgs.nodejs
@@ -20,7 +20,7 @@
     pkgs.tree
     pkgs.aerospace
     pkgs.gopls
-     pkgs.qemu
+    # pkgs.qemu
   ];
 
   homebrew = {
@@ -34,12 +34,12 @@
      global.autoUpdate = true;
 
     brews = [
-      "docker"
-      "iina"
+      # "docker"
+      # "iina"
       "k9s"
       "mas"
       "neovim"
-      "tailscale"
+      # "tailscale"
       # "qemu"
       "python3"
       "uv"
@@ -53,7 +53,7 @@
       "brave-browser"
       "codex"
       # "discord"
-      "docker-desktop"
+      # "docker-desktop"
       "firefox"
       "free-download-manager"
       "ghostty"
@@ -61,20 +61,20 @@
       # "iina"
       "iterm2"
       "obsidian"
-      "okta-verify"
+      # "okta-verify"
       "pgadmin4"
       "postman"
       "rectangle"
       "syncthing-app"
-      "tailscale-app"
+      # "tailscale-app"
       "visual-studio-code"
       "zed"
       #"neovim"
-      "google-chrome"
+      # "google-chrome"
       "raycast"
       "spotify"
       "slack"
-      "tailscale-app"
+      # "tailscale-app"
       "telegram"
       "the-unarchiver"
       "tor-browser"
@@ -83,11 +83,11 @@
 
     ];
     masApps = {
-      "Amphetamine" = 937984704;
-      "Telegram" = 747648890;
-      "Infuse" = 1136220934;
-      "Whatsapp" = 310633997;
-      "Capcut" = 1500855883;
+      # "Amphetamine" = 937984704;
+      # "Telegram" = 747648890;
+      # "Infuse" = 1136220934;
+      # "Whatsapp" = 310633997;
+      # "Capcut" = 1500855883;
       # "Xcode" = 497799835;
     };
   };
@@ -148,3 +148,4 @@
   system.configurationRevision = self.rev or self.dirtyRev or null;
   nix.enable = false;
 }
+
