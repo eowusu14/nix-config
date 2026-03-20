@@ -11,6 +11,7 @@
   home.sessionPath = [
     "$HOME/go/bin"
     "$HOME/.local/bin"
+    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   ];
 
   programs.home-manager.enable = true;
@@ -20,37 +21,6 @@
     pkgs.uv
     pkgs.yt-dlp
   ];
-
-  programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        email = "owusuboateng149@gmail.com";
-        name = "eowusu14";
-      };
-      init = {
-        defaultBranch = "main";
-      };
-      merge = {
-        conflictStyle = "diff3";
-        tool = "meld";
-      };
-      pull = {
-        rebase = true;
-      };
-      alias = {
-        undo = "reset HEAD~1 --soft";
-        unstage = "reset HEAD --";
-        uncommit = "reset HEAD~1 --soft";
-        recommit = "commit --amend --no-edit";
-        get = "pull origin";
-        push = "push origin HEAD";
-        commit = "commit -m";
-        add = "add -p";
-        log = "log --graph --all --pretty=format:%C(auto)%h %C(cyan)%ar %C(auto)%d %C(magenta)%an %C(auto)%s";
-      };
-    };
-  };
 
   programs.gpg.enable = true;
 
@@ -207,6 +177,11 @@
     };
 
   home.file = {
+    ".gitconfig" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/users/eowusu/dotfiles/.gitconfig";
+      force = false;
+    };
+
     ".zshrc" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/users/eowusu/dotfiles/.zshrc";
       force = true;

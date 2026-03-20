@@ -1,0 +1,24 @@
+[user]
+	name = Emmanuel Owusu
+	email = owusu.boateng@flyzipline.com
+
+[init]
+	defaultBranch = main
+
+[merge]
+	conflictStyle = diff3
+	tool = meld
+
+[pull]
+	rebase = true
+
+[alias]
+	undo = reset HEAD~1 --soft
+	unstage = reset HEAD --
+	uncommit = reset HEAD~1 --soft
+	recommit = commit --amend --no-edit
+	get = pull origin
+	push = push origin HEAD
+	commit = commit -m
+	add = add -p
+	log = log --graph --all --pretty=format:%C(auto)%h %C(cyan)%ar %C(auto)%d %C(magenta)%an %C(auto)%s

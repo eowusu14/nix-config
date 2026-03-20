@@ -1,5 +1,6 @@
 # use volta for node instead of nvm. takes precedence over nvm
 export PATH="$HOME/.volta/bin:$PATH"
+export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 
 # fix compdef errors
 autoload -Uz compinit
@@ -13,9 +14,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # source ~/github/experiments/ivanwang/dotfiles/scripts/chaws.shexport AWS_CONFIG_FILE=/Users/owusu.boateng/github/cloud/build_tools/aws_configs/cloud_config
-source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-chruby ruby-3.1.3 # run chruby to see actual version
+[[ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]] && source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+[[ -f /opt/homebrew/opt/chruby/share/chruby/auto.sh ]] && source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+command -v chruby >/dev/null 2>&1 && chruby ruby-3.1.3 # run chruby to see actual version
 
 
 # ~/.zshrc
@@ -45,11 +46,16 @@ export PATH="/usr/local/opt/curl/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/openssl/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include"
 
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+for p10k_theme in \
+  "$HOME/.nix-profile/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" \
+  "/etc/profiles/per-user/$USER/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" \
+  /nix/store/*-powerlevel10k-*/share/zsh-powerlevel10k/powerlevel10k.zsh-theme(N); do
+  [[ -f "$p10k_theme" ]] && source "$p10k_theme" && break
+done
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source /Users/owusu.boateng/.config/zipline/env
+[[ -f /Users/owusu.boateng/.config/zipline/env ]] && source /Users/owusu.boateng/.config/zipline/env
 
 # history setup
 HISTFILE=$HOME/.zhistory
@@ -70,8 +76,8 @@ setopt hist_verify
 # completion using arrow keys (based on history)
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
 
 # ---- Eza (better ls) -----
@@ -109,6 +115,11 @@ alias commit='git commit -m'
 alias add='git add -p'
 alias log='git log --graph --all --pretty="format:%C(auto)%h %C(cyan)%ar %C(auto)%d %C(magenta)%an %C(auto)%s"'
 alias cd=z
+
+# Open macOS GUI apps from Terminal, e.g. `app "Visual Studio Code"`
+app() {
+  open -a "$*"
+}
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/owusu.boateng/.rd/bin:$PATH"

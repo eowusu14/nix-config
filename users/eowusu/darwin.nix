@@ -9,9 +9,8 @@
 
   environment.systemPackages = [
     pkgs.alt-tab-macos
+    pkgs.codex
     pkgs.discord
-    # pkgs.docker
-    # pkgs.docker-client
     pkgs.hidden-bar
     pkgs.nix
     pkgs.nodejs
@@ -26,7 +25,7 @@
   homebrew = {
     enable = true;
     onActivation = {
-       cleanup = "zap";
+       cleanup = "none";
        # Update brew packages on rebuild
        autoUpdate = true;
        upgrade = true;
@@ -34,7 +33,6 @@
      global.autoUpdate = true;
 
     brews = [
-      # "docker"
       # "iina"
       "k9s"
       "mas"
@@ -53,7 +51,6 @@
       "brave-browser"
       "codex"
       # "discord"
-      # "docker-desktop"
       "firefox"
       "free-download-manager"
       "ghostty"
@@ -83,12 +80,12 @@
 
     ];
     masApps = {
-      # "Amphetamine" = 937984704;
-      # "Telegram" = 747648890;
-      # "Infuse" = 1136220934;
-      # "Whatsapp" = 310633997;
-      # "Capcut" = 1500855883;
-      # "Xcode" = 497799835;
+      "Amphetamine" = 937984704;
+      "Telegram" = 747648890;
+      "Infuse" = 1136220934;
+      "Whatsapp" = 310633997;
+      "Capcut" = 1500855883;
+      "Xcode" = 497799835;
     };
   };
 
@@ -117,8 +114,8 @@
       find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
       while IFS= read -r src; do
         app_name=$(basename "$src")
-        echo "copying $src" >&2
-        ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
+        echo "copying app bundle $src" >&2
+        /usr/bin/ditto "$src" "/Applications/Nix Apps/$app_name"
         /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "/Applications/Nix Apps/$app_name" >/dev/null 2>&1 || true
       done
     '';
@@ -148,4 +145,3 @@
   system.configurationRevision = self.rev or self.dirtyRev or null;
   nix.enable = false;
 }
-
