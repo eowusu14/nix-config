@@ -125,19 +125,29 @@
     dock.autohide = true;
     dock.largesize = 64;
     dock.persistent-apps = [
-      "/System/Applications/Launchpad.app"
       "/Applications/Google Chrome.app"
       "/Applications/Obsidian.app"
+      "/System/Applications/Books.app"
       "/Applications/Slack.app"
       "/Applications/Visual Studio Code.app"
       "/Applications/Ghostty.app"
       "/Applications/Zed.app"
     ];
+    dock.show-recents = false;
+
     finder.FXPreferredViewStyle = "clmv";
+    finder.ShowStatusBar = true;
     loginwindow.GuestEnabled = false;
     NSGlobalDomain.AppleICUForce24HourTime = true;
     NSGlobalDomain.AppleInterfaceStyle = "Dark";
+    NSGlobalDomain.AppleShowAllExtensions = true;
     NSGlobalDomain.KeyRepeat = 2;
+    NSGlobalDomain."com.apple.trackpad.scaling" = 2.5;
+
+    trackpad = {
+      Clicking = true;
+      TrackpadRightClick = true;
+    };
   };
 
   nix.settings.experimental-features = "nix-command flakes";
