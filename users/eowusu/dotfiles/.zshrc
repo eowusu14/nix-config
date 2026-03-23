@@ -128,3 +128,8 @@ export PATH="/Users/owusu.boateng/.rd/bin:$PATH"
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$HOME/.local/bin:$PATH"
 eval "$(direnv hook zsh)"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/owusu.boateng/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
