@@ -11,7 +11,6 @@
   home.sessionPath = [
     "$HOME/go/bin"
     "$HOME/.local/bin"
-    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
   ];
 
   programs.home-manager.enable = true;

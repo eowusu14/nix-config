@@ -1,6 +1,5 @@
 # use volta for node instead of nvm. takes precedence over nvm
 export PATH="$HOME/.volta/bin:$PATH"
-export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 
 # Ensure Homebrew-managed CLIs are on PATH on Apple Silicon macOS.
 [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -17,11 +16,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # source ~/github/experiments/ivanwang/dotfiles/scripts/chaws.shexport AWS_CONFIG_FILE=/Users/owusu.boateng/github/cloud/build_tools/aws_configs/cloud_config
-[[ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]] && source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-[[ -f /opt/homebrew/opt/chruby/share/chruby/auto.sh ]] && source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-command -v chruby >/dev/null 2>&1 && chruby ruby-3.1.3 # run chruby to see actual version
-
-
 # ~/.zshrc
 
 # Find and set branch name var if in git repository.
@@ -43,11 +37,6 @@ setopt prompt_subst
 prompt='%2/ $(git_branch_name) > '
 
 
-
-export PATH="/usr/local/opt/curl/bin:$PATH" #curl with --ssl support for rust installation
-export PATH="/usr/local/opt/curl/bin:$PATH"
-export LDFLAGS="-L/usr/local/opt/openssl/lib"
-export CPPFLAGS="-I/usr/local/opt/openssl/include"
 
 for p10k_theme in \
   "$HOME/.nix-profile/share/zsh-powerlevel10k/powerlevel10k.zsh-theme" \
