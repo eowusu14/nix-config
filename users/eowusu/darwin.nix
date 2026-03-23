@@ -35,6 +35,8 @@
     brews = [
       # "iina"
       "k9s"
+      "lazydocker"
+      "lazygit"
       "mas"
       "neovim"
       # "tailscale"

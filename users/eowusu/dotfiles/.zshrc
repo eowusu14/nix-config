@@ -2,6 +2,9 @@
 export PATH="$HOME/.volta/bin:$PATH"
 export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 
+# Ensure Homebrew-managed CLIs are on PATH on Apple Silicon macOS.
+[[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # fix compdef errors
 autoload -Uz compinit
 compinit
