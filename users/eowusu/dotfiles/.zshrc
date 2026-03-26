@@ -68,9 +68,6 @@ setopt hist_verify
 # completion using arrow keys (based on history)
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
-[[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
 
 # ---- Eza (better ls) -----
 
@@ -138,3 +135,25 @@ autoload -Uz compinit
 compinit
 # End of Docker CLI completions
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh) # add autocomplete permanently to your zsh shell
+
+# Load interactive Zsh plugins after completions and hooks so highlighting works reliably.
+for zsh_autosuggestions in \
+  "$HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
+  "/etc/profiles/per-user/$USER/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
+  /nix/store/*-zsh-autosuggestions-*/share/zsh-autosuggestions/zsh-autosuggestions.zsh(N); do
+  [[ -f "$zsh_autosuggestions" ]] && source "$zsh_autosuggestions" && break
+done
+
+for zsh_syntax_highlighting in \
+  "$HOME/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" \
+  "/etc/profiles/per-user/$USER/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" \
+  /nix/store/*-zsh-syntax-highlighting-*/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh(N); do
+  [[ -f "$zsh_syntax_highlighting" ]] && source "$zsh_syntax_highlighting" && break
+done
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main)
+typeset -gA ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[command]='fg=green'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=green'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=green'
+ZSH_HIGHLIGHT_STYLES[function]='fg=green'

@@ -16,6 +16,8 @@
   programs.home-manager.enable = true;
   home.packages = [
     pkgs.zsh-powerlevel10k
+    pkgs.zsh-autosuggestions
+    pkgs.zsh-syntax-highlighting
     pkgs.chruby
     pkgs.uv
     pkgs.yt-dlp
