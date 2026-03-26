@@ -53,6 +53,7 @@
       "brave-browser"
       "codex"
       # "discord"
+      "dbeaver-community"
       "firefox"
       "free-download-manager"
       "ghostty"
