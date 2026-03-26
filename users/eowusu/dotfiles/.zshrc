@@ -88,13 +88,25 @@ eval "$(uvx --generate-shell-completion zsh)"
 
 
 # kubectl aliases
-alias k='bin/kubectl'
-alias kctx-staging='kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-staging'
-alias kctx-prod='kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-production'
-alias kctx-preprod='kubectl config use-context arn:aws:eks:us-west-2:676657780981:cluster/primary-preprod'
+# alias k='bin/kubectl'
+# alias kctx-staging='kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-staging'
+# alias kctx-prod='kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-production'
+# alias kctx-preprod='kubectl config use-context arn:aws:eks:us-west-2:676657780981:cluster/primary-preprod'
 
-alias chaws='~/github/cloud/bin/kubectl env'
-alias kns='~/github/cloud/bin/kubectl ns'
+# alias chaws='~/github/cloud/bin/kubectl env'
+# alias kns='~/github/cloud/bin/kubectl ns'
+
+
+# KUBECTL ALIASES #
+alias k='kubectl'
+alias kdata='kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-data'
+alias kpre='kubectl config use-context arn:aws:eks:us-west-2:676657780981:cluster/primary-preprod'
+alias kstage='kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-staging'
+alias kprod='kubectl config use-context arn:aws:eks:us-west-2:149938346436:cluster/primary-production'
+alias awspre='export AWS_PROFILE=preprod'
+alias awsprod='export AWS_PROFILE=prod'
+alias awsdata='export AWS_PROFILE=data'
+alias awslogin='aws sso login'
 
 # git aliases
 alias unfuck='git reset HEAD~1 --soft'
@@ -125,3 +137,4 @@ fpath=(/Users/owusu.boateng/.docker/completions $fpath)
 autoload -Uz compinit
 compinit
 # End of Docker CLI completions
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh) # add autocomplete permanently to your zsh shell
