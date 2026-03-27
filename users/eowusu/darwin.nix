@@ -146,6 +146,11 @@
     NSGlobalDomain.AppleShowAllExtensions = true;
     NSGlobalDomain.KeyRepeat = 2;
     NSGlobalDomain."com.apple.trackpad.scaling" = 2.5;
+    CustomUserPreferences = {
+      NSGlobalDomain = {
+        NSWindowShouldDragOnGesture = true;
+      };
+    };
 
     trackpad = {
       Clicking = true;
