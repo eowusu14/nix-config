@@ -19,6 +19,7 @@
     pkgs.tree
     pkgs.aerospace
     pkgs.gopls
+    pkgs.protobuf
     # pkgs.qemu
   ];
 
