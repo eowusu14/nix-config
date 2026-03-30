@@ -39,6 +39,7 @@
       "lazydocker"
       "lazygit"
       "mas"
+      "mole"
       "neovim"
       # "tailscale"
       # "qemu"
