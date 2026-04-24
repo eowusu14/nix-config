@@ -10,7 +10,7 @@
 	tool = meld
 
 [pull]
-	rebase = true
+	rebase = false
 
 [alias]
 	undo = reset HEAD~1 --soft
