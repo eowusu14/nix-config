@@ -41,6 +41,7 @@
       "mas"
       "mole"
       "neovim"
+      "netnewswire"
       # "tailscale"
       # "qemu"
       "python3"
