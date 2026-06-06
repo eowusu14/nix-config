@@ -12,8 +12,10 @@
     # pkgs.codex
     pkgs.discord
     pkgs.hidden-bar
+    pkgs.net-news-wire
     pkgs.nix
     pkgs.nodejs
+    pkgs.prek
     pkgs.gh
     pkgs.ripgrep
     pkgs.tree
@@ -41,7 +43,6 @@
       "mas"
       "mole"
       "neovim"
-      "netnewswire"
       # "tailscale"
       # "qemu"
       "python3"
