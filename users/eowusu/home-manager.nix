@@ -179,8 +179,8 @@
     source = ./dotfiles/nvim;
     force = true;
   };
-  xdg.configFile."herdr" = {
-    source = ./dotfiles/herdr;
+  xdg.configFile."herdr/config.toml" = {
+    source = ./dotfiles/herdr/config.toml;
     force = true;
   };
 }
