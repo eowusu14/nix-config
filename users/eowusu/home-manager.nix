@@ -139,6 +139,13 @@
         set -g @resurrect-capture-pane-contents 'on'
 
         set -g @tokyo-night-theme "storm"
+
+        # Kitty keyboard protocol passthrough (for Shift+Enter in opencode)
+        set -ga terminal-overrides ",*:XT"
+        set -g allow-passthrough on
+
+        # Translate Shift+Enter to Alt+Enter for opencode
+        bind -n S-Enter send-keys M-Enter
       '';
     };
 
