@@ -106,7 +106,6 @@ alias awsdata='export AWS_PROFILE=data'
 alias awslogin='aws sso login'
 
 # git aliases
-alias unfuck='git reset HEAD~1 --soft'
 alias unstage='git reset HEAD --'
 alias uncommit='git reset HEAD~1 --soft'
 alias recommit='git commit --amend --no-edit'
@@ -158,3 +157,6 @@ ZSH_HIGHLIGHT_STYLES[alias]='fg=green'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=green'
 ZSH_HIGHLIGHT_STYLES[function]='fg=green'
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+# aliases
+alias h='herdr'

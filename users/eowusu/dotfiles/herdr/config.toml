@@ -1,0 +1,7 @@
+[keys]
+prefix = "ctrl+a"
+detach = "prefix+d"
+split_vertical = "prefix+|"
+split_horizontal = "prefix+minus"
+toggle_sidebar = "prefix+b"
+rename_tab = "prefix+,"

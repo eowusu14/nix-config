@@ -179,4 +179,8 @@
     source = ./dotfiles/nvim;
     force = true;
   };
+  xdg.configFile."herdr" = {
+    source = ./dotfiles/herdr;
+    force = true;
+  };
 }
