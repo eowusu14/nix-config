@@ -265,12 +265,6 @@ lists does not uninstall it. Remove obsolete packages manually or deliberately
 change the cleanup policy after reviewing its effect on packages that are not
 declared here.
 
-The official core, cask, and bundle taps are managed by nix-homebrew with
-`mutableTaps = false`. Add another tap as a non-flake input in `flake.nix`, then
-add it to `nix-homebrew.taps`. Imperative `brew tap` changes are intentionally
-disabled. Homebrew's own auto-update is also disabled; update tap and Homebrew
-revisions with `make update-homebrew`.
-
 ### Mac App Store application
 
 Add the application name and numeric App Store ID to `homebrew.masApps`. The
