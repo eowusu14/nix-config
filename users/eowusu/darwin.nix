@@ -1,4 +1,4 @@
-{ self, pkgs, config, user, ... }:
+{ self, inputs, pkgs, config, user, ... }:
 {
   users.users.${user} = {
     home = "/Users/${user}";
@@ -25,15 +25,26 @@
     # pkgs.qemu
   ];
 
+  nix-homebrew = {
+    enable = true;
+    user = user;
+    taps = {
+      "homebrew/homebrew-core" = inputs.homebrew-core;
+      "homebrew/homebrew-cask" = inputs.homebrew-cask;
+      "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+    };
+    mutableTaps = false;
+  };
+
   homebrew = {
     enable = true;
+    taps = builtins.attrNames config.nix-homebrew.taps;
     onActivation = {
-       cleanup = "none";
-       # Update brew packages on rebuild
-       autoUpdate = true;
-       upgrade = true;
-     };
-     global.autoUpdate = true;
+      cleanup = "none";
+      autoUpdate = false;
+      upgrade = true;
+    };
+    global.autoUpdate = false;
 
     brews = [
       # "iina"

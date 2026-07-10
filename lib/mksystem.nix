@@ -27,6 +27,7 @@ systemFunc {
     machineConfig
     userOSConfig
     homeManagerModule
+    (if darwin then inputs.nix-homebrew.darwinModules.nix-homebrew else { })
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
