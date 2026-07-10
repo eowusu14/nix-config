@@ -1,5 +1,5 @@
 { user, darwin ? false, ... }:
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 {
   home.username = user;
   home.homeDirectory = if darwin then "/Users/${user}" else "/home/${user}";
@@ -151,12 +151,12 @@
 
   home.file = {
     ".gitconfig" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/users/eowusu/dotfiles/.gitconfig";
+      source = ./dotfiles/.gitconfig;
       force = false;
     };
 
     ".zshrc" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix/users/eowusu/dotfiles/.zshrc";
+      source = ./dotfiles/.zshrc;
       force = true;
     };
 

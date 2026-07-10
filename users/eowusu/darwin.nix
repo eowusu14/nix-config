@@ -42,11 +42,12 @@
     onActivation = {
       cleanup = "none";
       autoUpdate = false;
-      upgrade = true;
+      upgrade = false;
     };
     global.autoUpdate = false;
 
     brews = [
+      "herdr"
       # "iina"
       "k9s"
       "lazydocker"
@@ -57,15 +58,17 @@
       # "tailscale"
       # "qemu"
       "python3"
-      "uv"
+      #"uv"
       "samba"
       "go"
 
     ];
     casks = [
       # "alt-tab"
-      "aws-vpn-client"
+      #"aws-vpn-client"
+      "arc"
       "brave-browser"
+      "capcut"
       "codex"
       # "discord"
       "dbeaver-community"
@@ -76,6 +79,7 @@
       # "iina"
       "iterm2"
       "obsidian"
+      "netnewswire"
       # "okta-verify"
       "pgadmin4"
       "postman"
@@ -94,15 +98,15 @@
       "the-unarchiver"
       "tor-browser"
       "vlc"
+      "whatsapp"
       "zoom"
 
     ];
     masApps = {
       "Amphetamine" = 937984704;
-      "Telegram" = 747648890;
       "Infuse" = 1136220934;
-      "Whatsapp" = 310633997;
-      "Capcut" = 1500855883;
+      #"Whatsapp" = 310633997;
+      #"Capcut" = 1500855883;
       # "Xcode" = 497799835;
     };
   };
@@ -117,33 +121,11 @@
     pkgs.nerd-fonts.hack
   ];
 
-  system.activationScripts.applications.text =
-    let
-      env = pkgs.buildEnv {
-        name = "system-applications";
-        paths = config.environment.systemPackages;
-        pathsToLink = [ "/Applications" ];
-      };
-    in
-    pkgs.lib.mkForce ''
-      echo "setting up /Applications..." >&2
-      rm -rf /Applications/Nix\ Apps
-      mkdir -p /Applications/Nix\ Apps
-      find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-      while IFS= read -r src; do
-        app_name=$(basename "$src")
-        echo "copying app bundle $src" >&2
-        /usr/bin/ditto "$src" "/Applications/Nix Apps/$app_name"
-        /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "/Applications/Nix Apps/$app_name" >/dev/null 2>&1 || true
-      done
-    '';
-
   # macOS Configuration
   system.defaults = {
     dock.autohide = true;
     dock.largesize = 64;
     dock.persistent-apps = [
-      "/Applications/Google Chrome.app"
       "/Applications/Obsidian.app"
       "/System/Applications/Books.app"
       "/Applications/Slack.app"
