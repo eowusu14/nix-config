@@ -81,7 +81,6 @@
       "obsidian"
       "netnewswire"
       # "okta-verify"
-      "pgadmin4"
       "postman"
       "rectangle"
       "syncthing-app"
@@ -102,6 +101,9 @@
       "zoom"
 
     ];
+    extraConfig = ''
+      cask "pgadmin4", args: { force: true }
+    '';
     masApps = {
       "Amphetamine" = 937984704;
       "Infuse" = 1136220934;

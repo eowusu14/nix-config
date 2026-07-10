@@ -19,5 +19,5 @@ update-nix:
 
 # Update pinned Homebrew inputs, then apply them without imperative package upgrades.
 update-homebrew:
-	nix flake update nix-homebrew homebrew-core homebrew-cask homebrew-bundle --flake "$(FLAKE_DIR)"
+	nix flake update brew-src nix-homebrew homebrew-core homebrew-cask homebrew-bundle --flake "$(FLAKE_DIR)"
 	sudo darwin-rebuild switch --flake "$(FLAKE_DIR)#$(DARWIN_HOST)" --show-trace
