@@ -52,6 +52,7 @@
       "k9s"
       "lazydocker"
       "lazygit"
+      "libpq" #psql
       "mas"
       "mole"
       "neovim"
