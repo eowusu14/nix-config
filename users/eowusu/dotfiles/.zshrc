@@ -156,7 +156,11 @@ ZSH_HIGHLIGHT_STYLES[command]='fg=green'
 ZSH_HIGHLIGHT_STYLES[alias]='fg=green'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=green'
 ZSH_HIGHLIGHT_STYLES[function]='fg=green'
+
+# Path exports
 export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
 
 # aliases
 alias h='herdr'

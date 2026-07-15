@@ -69,7 +69,7 @@
       #"aws-vpn-client"
       "arc"
       "brave-browser"
-      "capcut"
+      #"capcut"
       "codex"
       # "discord"
       "dbeaver-community"
@@ -106,8 +106,8 @@
       cask "pgadmin4", args: { force: true }
     '';
     masApps = {
-      "Amphetamine" = 937984704;
-      "Infuse" = 1136220934;
+      #"Amphetamine" = 937984704;
+      #"Infuse" = 1136220934;
       #"Whatsapp" = 310633997;
       #"Capcut" = 1500855883;
       # "Xcode" = 497799835;
