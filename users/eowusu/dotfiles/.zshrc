@@ -66,8 +66,8 @@ setopt no_hist_save_no_dups
 setopt hist_verify
 
 # completion using arrow keys (based on history)
-bindkey '^[[A' history-search-backward
-bindkey '^[[B' history-search-forward
+# bindkey '^[[A' history-search-backward
+# bindkey '^[[B' history-search-forward
 
 # ---- Eza (better ls) -----
 
@@ -156,6 +156,17 @@ ZSH_HIGHLIGHT_STYLES[command]='fg=green'
 ZSH_HIGHLIGHT_STYLES[alias]='fg=green'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=green'
 ZSH_HIGHLIGHT_STYLES[function]='fg=green'
+
+for zsh_history_substring_search in \
+  "$HOME/.nix-profile/share/zsh-history-substring-search/zsh-history-substring-search.zsh" \
+  "/etc/profiles/per-user/$USER/share/zsh-history-substring-search/zsh-history-substring-search.zsh" \
+  /nix/store/*-zsh-history-substring-search-*/share/zsh-history-substring-search/zsh-history-substring-search.zsh(N); do
+  [[ -f "$zsh_history_substring_search" ]] && source "$zsh_history_substring_search" && break
+done
+
+# bind up and down arrow keys to history substring search
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 # Path exports
 export PATH="$HOME/.npm-global/bin:$PATH"

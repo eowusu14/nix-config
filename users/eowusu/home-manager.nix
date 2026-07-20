@@ -15,8 +15,9 @@
 
   programs.home-manager.enable = true;
   home.packages = [
-    pkgs.zsh-powerlevel10k
     pkgs.zsh-autosuggestions
+    pkgs.zsh-history-substring-search
+    pkgs.zsh-powerlevel10k
     pkgs.zsh-syntax-highlighting
     pkgs.chruby
     pkgs.uv
