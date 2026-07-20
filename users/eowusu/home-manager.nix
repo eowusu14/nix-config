@@ -15,6 +15,8 @@
 
   programs.home-manager.enable = true;
   home.packages = [
+    pkgs.zsh-completions
+    pkgs.zsh-fzf-tab
     pkgs.zsh-autosuggestions
     pkgs.zsh-history-substring-search
     pkgs.zsh-powerlevel10k

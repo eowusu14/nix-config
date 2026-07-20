@@ -4,9 +4,28 @@ export PATH="$HOME/.volta/bin:$PATH"
 # Ensure Homebrew-managed CLIs are on PATH on Apple Silicon macOS.
 [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# fix compdef errors
+# Add packaged completion definitions before initializing Zsh's completion system.
+for zsh_completions_dir in \
+  "$HOME/.nix-profile/share/zsh/site-functions" \
+  "/etc/profiles/per-user/$USER/share/zsh/site-functions"; do
+  [[ -d "$zsh_completions_dir" ]] && fpath=("$zsh_completions_dir" $fpath)
+done
+
+# Docker Desktop CLI completions also need to be registered before compinit.
+[[ -d /Users/owusu.boateng/.docker/completions ]] && \
+  fpath=(/Users/owusu.boateng/.docker/completions $fpath)
+
+# Initialize completion once, after all completion directories are registered.
 autoload -Uz compinit
 compinit
+
+# Load fzf-tab before plugins that wrap ZLE widgets, such as autosuggestions.
+for zsh_fzf_tab in \
+  "$HOME/.nix-profile/share/fzf-tab/fzf-tab.plugin.zsh" \
+  "/etc/profiles/per-user/$USER/share/fzf-tab/fzf-tab.plugin.zsh" \
+  /nix/store/*-zsh-fzf-tab-*/share/fzf-tab/fzf-tab.plugin.zsh(N); do
+  [[ -f "$zsh_fzf_tab" ]] && source "$zsh_fzf_tab" && break
+done
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -129,9 +148,7 @@ export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$HOME/.local/bin:$PATH"
 eval "$(direnv hook zsh)"
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=(/Users/owusu.boateng/.docker/completions $fpath)
-autoload -Uz compinit
-compinit
+# The completion directory is added before compinit near the top of this file.
 # End of Docker CLI completions
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh) # add autocomplete permanently to your zsh shell
 
