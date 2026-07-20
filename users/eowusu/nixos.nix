@@ -1,15 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 {
-  environment.systemPackages = [
-    pkgs.tmux
-  ];
-
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  programs.zsh.enable = true;
   services.openssh.enable = true;
 
-  users.users.eowusu = {
+  users.users.${user} = {
     isNormalUser = true;
-    home = "/home/eowusu";
+    home = "/home/${user}";
+    shell = pkgs.zsh;
     extraGroups = [ "wheel" ];
   };
 }

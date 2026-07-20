@@ -9,20 +9,10 @@
 
   environment.systemPackages = [
     pkgs.alt-tab-macos
-    # pkgs.codex
     pkgs.discord
     pkgs.hidden-bar
-    pkgs.net-news-wire
     pkgs.nix
-    pkgs.nodejs
-    pkgs.prek
-    pkgs.gh
-    pkgs.ripgrep
-    pkgs.tree
     pkgs.aerospace
-    pkgs.gopls
-    pkgs.protobuf
-    # pkgs.qemu
   ];
 
   nix-homebrew = {
@@ -66,7 +56,6 @@
     ];
     casks = [
       # "alt-tab"
-      #"aws-vpn-client"
       "arc"
       "brave-browser"
       #"capcut"

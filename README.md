@@ -50,8 +50,14 @@ login window, keyboard repeat rate, appearance, and trackpad behavior.
 |   `-- macbook.nix                 # Apple Silicon macOS machine settings
 `-- users/eowusu/
     |-- darwin.nix                  # macOS packages, Homebrew, fonts, and defaults
-    |-- home-manager.nix            # User programs and dotfile links
-    `-- dotfiles/                   # Zsh, Git, tmux, Neovim, Ghostty, Aerospace
+    |-- home-manager.nix            # Small Home Manager entry point
+    |-- home/
+    |   |-- cli.nix                 # User packages, Git, and CLI programs
+    |   |-- dotfiles.nix            # Declarative dotfile links
+    |   |-- shell.nix               # Zsh and shell integrations
+    |   |-- tmux.nix                # Tmux and its plugins
+    |   `-- work.nix                # Work Git identity, AWS, and Kubernetes
+    `-- dotfiles/                   # Powerlevel10k, Neovim, Ghostty, Aerospace
 ```
 
 `lib/mksystem.nix` embeds Home Manager in each Darwin system configuration. The
@@ -233,7 +239,7 @@ Add the package to `environment.systemPackages` in
 
 ```nix
 environment.systemPackages = [
-  pkgs.ripgrep
+  pkgs.aerospace
 ];
 ```
 
@@ -243,7 +249,8 @@ nixpkgs.
 ### Home Manager package or program
 
 Add a package to `home.packages`, or enable its Home Manager module, in
-`users/eowusu/home-manager.nix`:
+the appropriate module under `users/eowusu/home/`. User CLI packages belong in
+`cli.nix`; shell integrations belong in `shell.nix`:
 
 ```nix
 programs.zoxide = {
@@ -273,7 +280,7 @@ current macOS user must already be signed in to the App Store.
 ### Dotfile
 
 Put source files under `users/eowusu/dotfiles` and declare them in
-`users/eowusu/home-manager.nix` with `home.file` or `xdg.configFile`.
+`users/eowusu/home/dotfiles.nix` with `home.file` or `xdg.configFile`.
 
 All dotfiles use repository-relative Home Manager sources. This keeps the
 checkout relocatable and makes the activated configuration reproducible, but

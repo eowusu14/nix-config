@@ -6,7 +6,7 @@ name:
   user,
   profile ? user,
   hostName ? name,
-  darwin ? false
+  darwin ? false,
 }:
 
 let
@@ -20,7 +20,7 @@ in
 systemFunc {
   inherit system;
 
-  specialArgs = { inherit inputs self user hostName; };
+  specialArgs = { inherit inputs self user hostName darwin; };
 
   modules = [
     { nixpkgs.config.allowUnfree = true; }
@@ -33,11 +33,9 @@ systemFunc {
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
       home-manager.extraSpecialArgs = {
-        inherit inputs self;
+        inherit inputs self user darwin;
       };
-      home-manager.users.${user} = import userHMConfig {
-        inherit inputs user darwin;
-      };
+      home-manager.users.${user} = userHMConfig;
     }
     { networking.hostName = hostName; }
     {
