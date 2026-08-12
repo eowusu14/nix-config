@@ -26,7 +26,6 @@ in
       pkgs.zsh-completions
       uvxZshCompletion
     ]
-    ++ lib.optionals darwin [ pkgs.volta ]
     ++ lib.optionals (!darwin) [ pkgs.nodejs ];
 
   programs.gpg.enable = true;

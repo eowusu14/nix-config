@@ -15,7 +15,6 @@ let
     ]
     ++ lib.optionals darwin [
       "$HOME/.rd/bin"
-      "$HOME/.volta/bin"
     ];
 in
 {

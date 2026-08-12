@@ -46,6 +46,8 @@
       "mas"
       "mole"
       "neovim"
+      "node"
+      "pnpm"
       # "tailscale"
       # "qemu"
       "python3"
