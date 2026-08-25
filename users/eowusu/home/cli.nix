@@ -15,6 +15,7 @@ in
   home.packages =
     [
       pkgs.chruby
+      pkgs.fastfetch
       pkgs.gh
       pkgs.gopls
       pkgs.prek
@@ -22,7 +23,7 @@ in
       pkgs.ripgrep
       pkgs.tree
       pkgs.uv
-      pkgs.yt-dlp
+      # pkgs.yt-dlp
       pkgs.zsh-completions
       uvxZshCompletion
     ]

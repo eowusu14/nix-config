@@ -24,6 +24,19 @@ systemFunc {
 
   modules = [
     { nixpkgs.config.allowUnfree = true; }
+    {
+      # tmux 3.7c's configure script now requires an explicit jemalloc choice
+      # on Darwin. Nixpkgs does not enable jemalloc there, so select the
+      # supported no-jemalloc build explicitly.
+      nixpkgs.overlays = [
+        (final: prev: {
+          tmux = prev.tmux.overrideAttrs (old: {
+            configureFlags = old.configureFlags
+              ++ prev.lib.optionals prev.stdenv.hostPlatform.isDarwin [ "--disable-jemalloc" ];
+          });
+        })
+      ];
+    }
     machineConfig
     userOSConfig
     homeManagerModule
