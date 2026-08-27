@@ -9,6 +9,7 @@
 
   environment.systemPackages = [
     pkgs.alt-tab-macos
+    pkgs.bazel
     pkgs.direnv
     pkgs.discord
     pkgs.hidden-bar
