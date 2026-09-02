@@ -17,10 +17,12 @@ in
       pkgs.chruby
       pkgs.fastfetch
       pkgs.gh
+      pkgs.goose
       pkgs.gopls
       pkgs.prek
       pkgs.protobuf
       pkgs.ripgrep
+      pkgs.sqlc
       pkgs.tree
       pkgs.uv
       # pkgs.yt-dlp
