@@ -8,7 +8,7 @@
   system.primaryUser = user;
 
   environment.systemPackages = [
-    pkgs.alt-tab-macos
+    # pkgs.alt-tab-macos
     pkgs.bazel
     pkgs.direnv
     pkgs.discord
@@ -93,11 +93,7 @@
       "vlc"
       "whatsapp"
       "zoom"
-
     ];
-    extraConfig = ''
-      cask "pgadmin4", args: { force: true }
-    '';
     masApps = {
       #"Amphetamine" = 937984704;
       #"Infuse" = 1136220934;
@@ -128,6 +124,7 @@
       "/Applications/Visual Studio Code.app"
       "/Applications/Ghostty.app"
       "/Applications/Zed.app"
+      "/Applications/Google Chrome.app"
     ];
     dock.show-recents = false;
 
