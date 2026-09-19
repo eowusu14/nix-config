@@ -39,6 +39,7 @@
     global.autoUpdate = false;
 
     brews = [
+      "buf"
       "herdr"
       # "iina"
       "k9s"
