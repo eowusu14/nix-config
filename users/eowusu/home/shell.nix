@@ -8,7 +8,11 @@
 let
   pnpmHome = if darwin then "$HOME/Library/pnpm" else "$HOME/.local/share/pnpm";
   sessionPath =
-    lib.optionals darwin [ "/opt/homebrew/opt/libpq/bin" ]
+    lib.optionals darwin [
+      "/opt/homebrew/bin"
+      "/opt/homebrew/sbin"
+      "/opt/homebrew/opt/libpq/bin"
+    ]
     ++ [
       pnpmHome
       "$HOME/.npm-global/bin"
